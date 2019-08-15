@@ -1,6 +1,7 @@
 import os
 import pprint
 import sys
+import traceback
 
 from sparkpost import SparkPost
 from sparkpost.exceptions import SparkPostAPIException
@@ -30,6 +31,6 @@ def email_post(request):
         except SparkPostAPIException as err:
             print("Error sending email through sparkpost. Got status {} and errors {}".format(err.status, err.errors))
             raise
-    except:
-        print("Unexpected error:", sys.exc_info()[0])
+    except Exception:
+        traceback.print_exc()
         return 'Error', 500
