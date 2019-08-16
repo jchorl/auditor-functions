@@ -49,19 +49,22 @@ def post_charge(bearer_token, curr_user, group, name, amount):
     }
 
     for idx, user in enumerate(group['members']):
-        body['users__{}__user_id'.format(str(idx))] = user['id']
+        body['users__{}__user_id'.format(idx)] = user['id']
 
         # round to 2 decimal places, last person takes the remainder
         amt_owed = round(float(amount) / len(group['members']), 2)
         if idx != len(group['members']) - 1:
-            body['users__{}__owed_share'.format(str(idx))] = amt_owed
+            owed_share = amt_owed
         else:
-            body['users__{}__owed_share'.format(str(idx))] = amount - (amt_owed * (len(group['members']) - 1))
+            owed_share = amount - (amt_owed * (len(group['members']) - 1))
 
         if user['id'] == curr_user['user']['id']:
-            body['users__{}__paid_share'.format(str(idx))] = amount
+            paid_share = amount
         else:
-            body['users__{}__paid_share'.format(str(idx))] = 0.
+            paid_share = 0.
+
+        body['users__{}__owed_share'.format(idx)] = owed_share
+        body['users__{}__paid_share'.format(idx)] = paid_share
 
     resp = requests.post(API_BASE_URL + 'create_expense', headers=headers, data=body)
     parsed = resp.json()
