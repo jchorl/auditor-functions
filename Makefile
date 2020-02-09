@@ -5,7 +5,7 @@ GID=$(shell id -g)
 
 deploy-function-email:
 	docker run -it --rm \
-		-v $(PWD)/functions/email:/auditor/functions/email \
+		-v $(PWD)/email:/auditor/functions/email \
 		--env=PROJECT_ID=$(PROJECT_ID) \
 		-w /auditor/functions/email \
 		jchorl/appengine-python:latest \
@@ -14,7 +14,7 @@ deploy-function-email:
 
 deploy-function-splitwise:
 	docker run -it --rm \
-		-v $(PWD)/functions/splitwise:/auditor/functions/splitwise \
+		-v $(PWD)/splitwise:/auditor/functions/splitwise \
 		--env=PROJECT_ID=$(PROJECT_ID) \
 		-w /auditor/functions/splitwise \
 		jchorl/appengine-python:latest \
@@ -23,7 +23,7 @@ deploy-function-splitwise:
 
 deploy-function-sheets:
 	docker run -it --rm \
-		-v $(PWD)/functions/sheets:/auditor/functions/sheets \
+		-v $(PWD)/sheets:/auditor/functions/sheets \
 		--env=PROJECT_ID=$(PROJECT_ID) \
 		-w /auditor/functions/sheets \
 		jchorl/appengine-python:latest \

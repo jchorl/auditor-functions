@@ -108,7 +108,7 @@ def add_transaction_to_sheet(service, account, date, name, amount, categories):
 
 def process_transaction(request):
     body = request.get_json()
-    account = body['metadata']['accountName']
+    account = body['item']['accountName']
     date = body['item']['date']
     name = body['item']['name']
     amount = body['item']['amount']

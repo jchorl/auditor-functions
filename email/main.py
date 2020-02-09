@@ -12,10 +12,11 @@ def email_post(request):
     try:
         email_address = os.environ.get('EMAIL_ADDRESS')
         body = request.get_json()
-        accountName = body['metadata']['accountName']
         if body['metadata']['type'] == 'balance':
+            accountName = body['account']['name']
             subject = 'Balance Notification for {}'.format(accountName)
         elif body['metadata']['type'] == 'transaction':
+            accountName = body['item']['accountName']
             subject = 'Transaction Notification for {}'.format(accountName)
         email_text = pprint.pformat(body)
         sp = SparkPost(SPARKPOST_API_KEY)
