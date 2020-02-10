@@ -108,11 +108,11 @@ def add_transaction_to_sheet(service, account, date, name, amount, categories):
 
 def process_transaction(request):
     body = request.get_json()
-    account = body['item']['accountName']
-    date = body['item']['date']
-    name = body['item']['name']
-    amount = body['item']['amount']
-    categories = body['item']['category']
+    account = body['transaction']['accountName']
+    date = body['transaction']['date']
+    name = body['transaction']['name']
+    amount = body['transaction']['amount']
+    categories = body['transaction']['category']
 
     creds = get_google_creds()
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
